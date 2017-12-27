@@ -41,8 +41,8 @@ def parseFileContent(metadataMap,content) {
                 if(!fileName.contains('/'))
                     throw new ParseException("Error parsing the file at line ${count+1} : $fileName must have a folder");
             }
-            if(metadataType.children != null){ // meta with children
-                metadataType.children.each { childName ->
+            if(metadataType.dependences != null){ // meta with dependences
+                metadataType.dependences.each { childName ->
                     if(result[childName] == null) result[childName]=["*"];
                     else result[childName].add("*");
                 }

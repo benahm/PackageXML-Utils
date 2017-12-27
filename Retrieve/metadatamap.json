@@ -12,7 +12,7 @@
         "name": "InstalledPackage"
     },
     {
-        "children": "CustomLabel",
+        "dependences": "CustomLabel",
         "directoryName": "labels",
         "inFolder": "false",
         "fileSuffix": "labels",
@@ -55,17 +55,6 @@
         "name": "Queue"
     },
     {
-        "children": [
-            "BusinessProcess",
-            "CompactLayout",
-            "CustomField",
-            "FieldSet",
-            "ListView",
-            "RecordType",
-            "SharingReason",
-            "ValidationRule",
-            "WebLink"
-        ],
         "directoryName": "objects",
         "inFolder": "false",
         "fileSuffix": "object",
@@ -125,9 +114,6 @@
         "name": "QuickAction"
     },
     {
-        "children": {
-            "@xsi:nil": "true"
-        },
         "directoryName": "flexipages",
         "inFolder": "false",
         "fileSuffix": "flexipage",
@@ -164,21 +150,18 @@
         "name": "EmailTemplate"
     },
     {
-        "children": "AssignmentRule",
         "directoryName": "assignmentRules",
         "inFolder": "false",
         "fileSuffix": "assignmentRules",
         "name": "AssignmentRules"
     },
     {
-        "children": "AutoResponseRule",
         "directoryName": "autoResponseRules",
         "inFolder": "false",
         "fileSuffix": "autoResponseRules",
         "name": "AutoResponseRules"
     },
     {
-        "children": "EscalationRule",
         "directoryName": "escalationRules",
         "inFolder": "false",
         "fileSuffix": "escalationRules",
@@ -191,9 +174,6 @@
         "name": "Role"
     },
     {
-        "children": [
-            "GlobalPicklistValue"
-        ],
         "directoryName": "globalPicklist",
         "inFolder": "false",
         "fileSuffix": "globalPicklist",
@@ -266,13 +246,11 @@
         "name": "ApexTrigger"
     },
     {
-        "children": [
+        "dependences": [
             "ApexClass",
             "CustomApplication",
-            "CustomField",
             "CustomObject",
             "ExternalDataSource",
-            "RecordType",
             "ApexPage"
         ],
         "directoryName": "profiles",
@@ -281,6 +259,13 @@
         "name": "Profile"
     },
     {
+        "dependences": [
+            "ApexClass",
+            "CustomApplication",
+            "CustomObject",
+            "ExternalDataSource",
+            "ApexPage"
+        ],
         "directoryName": "permissionsets",
         "inFolder": "false",
         "fileSuffix": "permissionset",
@@ -305,74 +290,14 @@
         "name": "AuthProvider"
     },
     {
-        "children": [
-            "LeadOwnerSharingRule",
-            "LeadCriteriaBasedSharingRule"
+        "dependences": [
+            "SharingOwnerRule",
+            "SharingCriteriaRule"
         ],
-        "directoryName": "leadSharingRules",
+        "directoryName": "sharingRules",
         "inFolder": "false",
         "fileSuffix": "sharingRules",
-        "name": "LeadSharingRules"
-    },
-    {
-        "children": [
-            "CampaignOwnerSharingRule",
-            "CampaignCriteriaBasedSharingRule"
-        ],
-        "directoryName": "campaignSharingRules",
-        "inFolder": "false",
-        "fileSuffix": "sharingRules",
-        "name": "CampaignSharingRules"
-    },
-    {
-        "children": [
-            "CaseOwnerSharingRule",
-            "CaseCriteriaBasedSharingRule"
-        ],
-        "directoryName": "caseSharingRules",
-        "inFolder": "false",
-        "fileSuffix": "sharingRules",
-        "name": "CaseSharingRules"
-    },
-    {
-        "children": [
-            "ContactOwnerSharingRule",
-            "ContactCriteriaBasedSharingRule"
-        ],
-        "directoryName": "contactSharingRules",
-        "inFolder": "false",
-        "fileSuffix": "sharingRules",
-        "name": "ContactSharingRules"
-    },
-    {
-        "children": [
-            "OpportunityOwnerSharingRule",
-            "OpportunityCriteriaBasedSharingRule"
-        ],
-        "directoryName": "opportunitySharingRules",
-        "inFolder": "false",
-        "fileSuffix": "sharingRules",
-        "name": "OpportunitySharingRules"
-    },
-    {
-        "children": [
-            "AccountOwnerSharingRule",
-            "AccountCriteriaBasedSharingRule"
-        ],
-        "directoryName": "accountSharingRules",
-        "inFolder": "false",
-        "fileSuffix": "sharingRules",
-        "name": "AccountSharingRules"
-    },
-    {
-        "children": [
-            "CustomObjectOwnerSharingRule",
-            "CustomObjectCriteriaBasedSharingRule"
-        ],
-        "directoryName": "customObjectSharingRules",
-        "inFolder": "false",
-        "fileSuffix": "sharingRules",
-        "name": "CustomObjectSharingRules"
+        "name": "SharingRules"
     },
     {
         "directoryName": "communities",
@@ -416,7 +341,7 @@
         "name": "AuraDefinitionBundle"
     },
     {
-        "children": [
+        "dependences": [
             "CustomApplication",
             "CustomLabels",
             "CustomPageWebLink",
@@ -434,15 +359,6 @@
         "name": "Translations"
     },
     {
-        "children": [
-            "WorkflowAlert",
-            "WorkflowFieldUpdate",
-            "WorkflowFlowAction",
-            "WorkflowKnowledgePublish",
-            "WorkflowOutboundMessage",
-            "WorkflowRule",
-            "WorkflowTask"
-        ],
         "directoryName": "workflows",
         "inFolder": "false",
         "fileSuffix": "workflow",
