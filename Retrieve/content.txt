@@ -1,0 +1,9 @@
+CommunitiesSelfRegConfirmController.cls
+CommunitiesSelfRegConfirmControllerTest.cls
+CommunitiesSelfRegControllerTest.cls
+CommunitiesLogOut.page
+ForgotPassword.page
+Standard.profile
+Account.object
+Case.object
+folderTest/testEmail.email
