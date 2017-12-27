@@ -41,21 +41,29 @@ def parseFileContent(metadataMap,content) {
                 if(!name.contains('/'))
                     throw new ParseException("Error parsing the file at line ${count+1} : $fileName must have a folder");
             }
-            if(metadataType.dependences != null){ // meta with dependences
-                metadataType.dependences.each { childName ->
-                    if(result[childName] == null) result[childName]=["*"];
-                    else result[childName].add("*");
-                }
-            }
 
-            if(result[metadataType.name] == null) result[metadataType.name] = []
-            result[metadataType.name].add(name)
+            if(result[metadataType] == null) result[metadataType] = []
+            result[metadataType].add(name)
         }else throw new ParseException("Error parsing the file at line ${count+1} : $fileName is invalid");
 
     }
     return result;
 }
 
+
+def copyFilesToTmp(map){
+    Set metadataTypes = map.keySet();
+    metadataTypes.each({ metadataType ->
+        new File("$targetPackagePath/${metadataType.directoryName}").mkdir()  
+        copy {
+            into "$targetPackagePath/${metadataType.directoryName}"
+            map[metadataType].each { name ->
+                from "$sourcePackagePath/${metadataType.directoryName}/$name.${metadataType.fileSuffix}"
+                from "$sourcePackagePath/${metadataType.directoryName}/$name.${metadataType.fileSuffix}-meta.xml"
+            }
+        }
+    })
+}
 
 // Generate
 def generatePackageXML(map){
@@ -66,18 +74,18 @@ def generatePackageXML(map){
     xml.mkp.xmlDeclaration(version: "1.0", encoding: "UTF-8")
 
     xml.Package(xmlns:"http://soap.sforce.com/2006/04/metadata"){
-        folders.each({ metadataTypeName ->
+        folders.each({ metadataType ->
             types(){
-                map[metadataTypeName].toSet().toSorted().each { name ->
+                map[metadataType].toSet().toSorted().each { name ->
                     members(name)
                 }
-                name(metadataTypeName)
+                name(metadataType.name)
             }
         })
         __version__(apiVersion)
     }
 
-    File file = new File(packageXMLFilePath)
+    File file = new File("$targetPackagePath/package.xml")
 
     def packageXMLContent = sw.toString().replace('__version__','version');
 
@@ -96,7 +104,8 @@ class ParseException extends Exception {
 
 task generate {
     doLast {
-        def mapResult = parseFileContent(metadataMap,content);
+        def mapResult = parseFileContent(metadataMap,content)
+        copyFilesToTmp(mapResult)
         def packgeXML = generatePackageXML(mapResult)
         println "Package xml generated : \n $packgeXML"
     }
