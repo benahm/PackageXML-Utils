@@ -33,8 +33,8 @@ def parseFileContent(metadataMap,content) {
 
         if(!fileName.contains('.')) throw new ParseException("Error parsing the file at line ${count+1} : $fileName must have a suffix");
 
-        def fileSuffix = fileName.substring(fileName.indexOf(".")+1)
-        def name = fileName.substring(0,fileName.indexOf("."))
+        def fileSuffix = fileName.substring(fileName.lastIndexOf(".")+1)
+        def name = fileName.substring(0,fileName.lastIndexOf("."))
 
         def metadataType = getMetadataTypeByFileSuffix(metadataMap,fileSuffix)
         if(metadataType != null){
