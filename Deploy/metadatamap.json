@@ -119,6 +119,12 @@
         "name": "FlexiPage"
     },
     {
+        "directoryName": "customPermissions",
+        "inFolder": "false",
+        "fileSuffix": "customPermission",
+        "name": "CustomPermission"
+    },
+    {
         "directoryName": "tabs",
         "inFolder": "false",
         "fileSuffix": "tab",
@@ -231,6 +237,12 @@
         "inFolder": "false",
         "fileSuffix": "flow",
         "name": "Flow"
+    },
+    {
+        "directoryName": "flowDefinitions",
+        "inFolder": "false",
+        "fileSuffix": "flowDefinition",
+        "name": "FlowDefinition"
     },
     {
         "directoryName": "classes",
