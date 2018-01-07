@@ -58,9 +58,13 @@ def copyFilesToTmp(map){
     def absoluteSourcePackagePath = new File(sourcePackagePath).absolutePath
     metadataTypes.each({ metadataType ->
         new File("$absoluteTargetPackagePath/${metadataType.directoryName}").mkdir()  
-        copy {
-            into "$absoluteTargetPackagePath/${metadataType.directoryName}"
-            map[metadataType].each { name ->
+        map[metadataType].each { name ->
+            copy {
+                if(metadataMap.inFolder == true)
+                    into "$absoluteTargetPackagePath/${metadataType.directoryName}/"+name.substring(0,name.lastIndexOf("/"))
+                else 
+                    into "$absoluteTargetPackagePath/${metadataType.directoryName}"
+                
                 from "$absoluteSourcePackagePath/${metadataType.directoryName}/$name.${metadataType.fileSuffix}"
                 from "$absoluteSourcePackagePath/${metadataType.directoryName}/$name.${metadataType.fileSuffix}-meta.xml"
             }
