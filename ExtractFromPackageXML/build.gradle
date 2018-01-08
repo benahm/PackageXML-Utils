@@ -39,14 +39,12 @@ def extractMetadataType(metadataMap,packageXMLContent,metadataTypeName) {
         }
     }
 
-    println packageXMLContent;
     // loop through the file packageXMLContent
     packageXMLContent.types.each { type ->
         if(metadataTypeNames.contains(type.name)){
             result.add(type);
         }
     }
-    println result;
     return result;
 }
 
@@ -89,7 +87,7 @@ class ParseException extends Exception {
 
 task generate {
     doLast {
-        def mapResult = extractMetadataType(metadataMap,packageXMLContent,'Profile');
+        def mapResult = extractMetadataType(metadataMap,packageXMLContent,metadataTypeName);
         def packgeXML = generatePackageXML(mapResult)
         println "Package xml generated : \n $packgeXML"
     }
