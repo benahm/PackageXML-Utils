@@ -60,7 +60,7 @@ def copyFilesToTmp(map){
         new File("$absoluteTargetPackagePath/${metadataType.directoryName}").mkdir()  
         map[metadataType].each { name ->
             copy {
-                if(metadataMap.inFolder == true)
+                if(metadataType.inFolder == 'true')
                     into "$absoluteTargetPackagePath/${metadataType.directoryName}/"+name.substring(0,name.lastIndexOf("/"))
                 else 
                     into "$absoluteTargetPackagePath/${metadataType.directoryName}"
