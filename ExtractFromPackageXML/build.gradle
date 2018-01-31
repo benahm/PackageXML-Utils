@@ -3,15 +3,11 @@
 * Extract a metadata type from an existing package xml
 */
 
-
-
-
-
-task generate(type : ExtractMetadataFromPackageXMLTask) {
+task generate(type : ExtractMetadataTypeFromPackageXMLTask) {
     metadataMapFilePath = './../metadatamap.json'
     inputPackageXMLFilePath = './package.xml'
     outputPackageXMLFilePath = './package.extract.xml'
-    metadataTypeName = 'ApexClass'
+    metadataTypeNames = ['ApexClass','ApexPage']
     apiVersion = '40.0'
 }
 

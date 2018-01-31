@@ -5,22 +5,20 @@
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-class ExtractMetadataFromPackageXMLTask extends DefaultTask {
-    String metadataMapFilePath = ''
-    String inputPackageXMLFilePath = ''
-    String outputPackageXMLFilePath = ''
-    String metadataTypeName = ''
+class ExtractMetadataTypeFromPackageXMLTask extends DefaultTask {
+    String metadataMapFilePath
+    String inputPackageXMLFilePath
+    String outputPackageXMLFilePath
+    List metadataTypeNames
     String apiVersion
 
-
-
     @TaskAction
-    def greet() {
+    def extract() {
         File packageXMLFile = new File(inputPackageXMLFilePath);
     	File metadataMapFile = new File(metadataMapFilePath);
     	def packageXMLContent = new groovy.util.XmlSlurper().parseText(packageXMLFile.getText());
     	def metadataMap = new groovy.json.JsonSlurper().parseText(metadataMapFile.text); 
-        def mapResult = extractMetadataType(metadataMap,packageXMLContent,metadataTypeName);
+        def mapResult = extractMetadataType(metadataMap,packageXMLContent,metadataTypeNames);
         def packgeXML = generatePackageXML(mapResult)
         println "Package xml generated : \n $packgeXML"
     }
@@ -38,24 +36,26 @@ class ExtractMetadataFromPackageXMLTask extends DefaultTask {
     }
 
     // Extract 
-    def extractMetadataType(metadataMap,packageXMLContent,metadataTypeName) {
+    def extractMetadataType(metadataMap,packageXMLContent,metadataTypeNames) {
         def result = [];
 
-        def metadataTypeNames = []
+        def metadataTypeNameList = []
 
-        def metadataType = getMetadataTypeByName(metadataMap,metadataTypeName)
+        metadataTypeNames.each{ metadataTypeName -> 
+            def metadataType = getMetadataTypeByName(metadataMap,metadataTypeName)
+            
+            metadataTypeNameList.add(metadataType.name);
 
-        metadataTypeNames.add(metadataType.name);
-
-        if(metadataType.dependences != null){ // meta with dependences
-            metadataType.dependences.each { name ->
-            metadataTypeNames.add(name);
+            if(metadataType.dependences != null){ // meta with dependences
+                metadataType.dependences.each { name ->
+                    metadataTypeNameList.add(name);
+                }
             }
         }
 
         // loop through the file packageXMLContent
         packageXMLContent.types.each { type ->
-            if(metadataTypeNames.contains(type.name)){
+            if(metadataTypeNameList.contains(type.name)){
                 result.add(type);
             }
         }
@@ -88,14 +88,6 @@ class ExtractMetadataFromPackageXMLTask extends DefaultTask {
         file.write packageXMLContent
 
         return packageXMLContent
-    }
-}
-
-
-
-class ParseException extends Exception {
-    ParseException(String message) {
-        super(message)
     }
 }
 
