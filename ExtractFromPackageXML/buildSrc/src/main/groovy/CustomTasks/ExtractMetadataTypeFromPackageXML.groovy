@@ -19,25 +19,14 @@ class ExtractMetadataTypesFromPackageXMLTask extends DefaultTask {
         File metadataTypesFile = new File(metadataTypesFilePath);
     	def inputPackageXMLContent = new groovy.util.XmlSlurper().parseText(inputPackageXMLFile.getText());
     	def metadataMapContent = new groovy.json.JsonSlurper().parseText(metadataMapFile.text); 
-        def mapResult = extractMetadataTypes(metadataMapContent,inputPackageXMLContent,metadataTypesFile);
+        def metadataMap = new MetadataMap(metadataMapContent);
+        def mapResult = extractMetadataTypes(metadataMap,inputPackageXMLContent,metadataTypesFile);
         def packageXML = generatePackageXML(mapResult)
         println "Package xml generated : \n $packageXML"
     }
 
-    def getMetadataTypeByFileSuffix(metadataMap,fileSuffix){
-        return metadataMap.find({ it.fileSuffix == fileSuffix});
-    }
-
-    def getMetadataTypeByDirectoryName(metadataMap,directoryName){
-        return metadataMap.find({ it.directoryName == directoryName});
-    }
-
-    def getMetadataTypeByName(metadataMap,name){
-        return metadataMap.find({ it.name == name});
-    }
-
     // Extract 
-    def extractMetadataTypes(metadataMapContent,packageXMLContent,metadataTypesFile) {
+    def extractMetadataTypes(metadataMap,packageXMLContent,metadataTypesFile) {
         def result = [];
 
         def metadataTypeNameList = []
@@ -45,7 +34,7 @@ class ExtractMetadataTypesFromPackageXMLTask extends DefaultTask {
         metadataTypesFile.each{ metadataTypeName -> 
             metadataTypeName = metadataTypeName.trim();
 
-            def metadataType = getMetadataTypeByName(metadataMapContent,metadataTypeName)
+            def metadataType = metadataMap.getMetadataTypeByName(metadataTypeName)
             metadataTypeNameList.add(metadataType.name);
         }
 
