@@ -14,15 +14,17 @@ class ExtractMetadataTypesFromPackageXMLTask extends DefaultTask {
 
     @TaskAction
     def extract() {
-        File inputPackageXMLFile = new File(inputPackageXMLFilePath);
     	File metadataMapFile = new File(metadataMapFilePath);
+        File inputPackageXMLFile = new File(inputPackageXMLFilePath);
+        File outputPackageXMLFile = new File(outputPackageXMLFilePath)
         File metadataTypesFile = new File(metadataTypesFilePath);
     	def inputPackageXMLContent = new groovy.util.XmlSlurper().parseText(inputPackageXMLFile.getText());
     	def metadataMapContent = new groovy.json.JsonSlurper().parseText(metadataMapFile.text); 
         def metadataMap = new MetadataMap(metadataMapContent);
-        def mapResult = extractMetadataTypes(metadataMap,inputPackageXMLContent,metadataTypesFile);
-        def packageXML = generatePackageXML(mapResult)
-        println "Package xml generated : \n $packageXML"
+        def xmlMetadataTypes = extractMetadataTypes(metadataMap,inputPackageXMLContent,metadataTypesFile);
+        def packageXML = new PackageXML(xmlMetadataTypes,apiVersion);
+        def packageXMLContent = packageXML.generate(outputPackageXMLFile)
+        println "Package xml generated : \n $packageXMLContent"
     }
 
     // Extract 
@@ -44,37 +46,9 @@ class ExtractMetadataTypesFromPackageXMLTask extends DefaultTask {
                 xmlMetadataTypes.add(type);
             }
         }
-        println xmlMetadataTypes+xmlMetadataTypes.members
         return xmlMetadataTypes;
     }
 
-    // Generate
-    def generatePackageXML(xmlMetadataTypes){
-
-        def sw = new StringWriter()
-        def xml = new groovy.xml.MarkupBuilder(sw)
-        xml.mkp.xmlDeclaration(version: "1.0", encoding: "UTF-8")
-
-        xml.Package(xmlns:"http://soap.sforce.com/2006/04/metadata"){
-            xmlMetadataTypes.each({ type ->
-                types(){
-                    type.members.each { member ->
-                        members(member)
-                    }
-                    name(type.name)
-                }
-            })
-            __version__(apiVersion)
-        }
-
-        File file = new File(outputPackageXMLFilePath)
-
-        def packageXMLContent = sw.toString().replace('__version__','version');
-
-        file.write packageXMLContent
-
-        return packageXMLContent
-    }
 }
 
 
