@@ -3,7 +3,7 @@
 * Extract a metadata type from an existing package xml
 */
 
-task generate(type : ExtractMetadataTypesFromPackageXMLTask) {
+task extractMetadata(type : ExtractMetadataTypesFromPackageXMLTask) {
     metadataMapFilePath = './../metadatamap.json'
     inputPackageXMLFilePath = './package.xml'
     outputPackageXMLFilePath = './package.extract.xml'
@@ -12,4 +12,12 @@ task generate(type : ExtractMetadataTypesFromPackageXMLTask) {
 }
 
 
-defaultTasks 'generate'
+task generatePackageXMLFromList(type : PackageXMLFromMetadaTypeFileListTask) {
+    metadataMapFilePath = './../metadatamap.json'
+    inputContentListFilePath = './contentList.txt'
+    outputPackageXMLFilePath = './package.extract.xml'
+    apiVersion = '40.0'
+}
+
+
+defaultTasks 'extractMetadata', 'generatePackageXMLFromList'

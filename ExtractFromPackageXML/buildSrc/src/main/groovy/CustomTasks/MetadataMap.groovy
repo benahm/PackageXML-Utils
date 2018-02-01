@@ -1,5 +1,7 @@
 
-
+/*
+* getters for the metadatamap
+*/
 
 class MetadataMap {
 

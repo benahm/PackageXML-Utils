@@ -27,7 +27,7 @@ class ExtractMetadataTypesFromPackageXMLTask extends DefaultTask {
 
     // Extract 
     def extractMetadataTypes(metadataMap,packageXMLContent,metadataTypesFile) {
-        def result = [];
+        def xmlMetadataTypes = [];
 
         def metadataTypeNameList = []
 
@@ -41,10 +41,11 @@ class ExtractMetadataTypesFromPackageXMLTask extends DefaultTask {
         // loop through the file packageXMLContent
         packageXMLContent.types.each { type ->
             if(metadataTypeNameList.contains(type.name)){
-                result.add(type);
+                xmlMetadataTypes.add(type);
             }
         }
-        return result;
+        println xmlMetadataTypes+xmlMetadataTypes.members
+        return xmlMetadataTypes;
     }
 
     // Generate
