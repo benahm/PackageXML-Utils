@@ -15,19 +15,6 @@
     <name>ApexPage</name>
   </types>
   <types>
-    <members>*</members>
-    <name>CustomApplication</name>
-  </types>
-  <types>
-    <members>*</members>
-    <members>Account</members>
-    <name>CustomObject</name>
-  </types>
-  <types>
-    <members>*</members>
-    <name>ExternalDataSource</name>
-  </types>
-  <types>
     <members>SGA Call Center</members>
     <name>Profile</name>
   </types>

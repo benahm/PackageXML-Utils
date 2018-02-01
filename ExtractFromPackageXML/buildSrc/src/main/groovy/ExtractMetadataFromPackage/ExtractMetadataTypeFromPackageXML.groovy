@@ -5,22 +5,23 @@
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-class ExtractMetadataTypeFromPackageXMLTask extends DefaultTask {
+class ExtractMetadataTypesFromPackageXMLTask extends DefaultTask {
     String metadataMapFilePath
     String inputPackageXMLFilePath
     String outputPackageXMLFilePath
-    List metadataTypeNames
+    String metadataTypesFilePath
     String apiVersion
 
     @TaskAction
     def extract() {
-        File packageXMLFile = new File(inputPackageXMLFilePath);
+        File inputPackageXMLFile = new File(inputPackageXMLFilePath);
     	File metadataMapFile = new File(metadataMapFilePath);
-    	def packageXMLContent = new groovy.util.XmlSlurper().parseText(packageXMLFile.getText());
-    	def metadataMap = new groovy.json.JsonSlurper().parseText(metadataMapFile.text); 
-        def mapResult = extractMetadataType(metadataMap,packageXMLContent,metadataTypeNames);
-        def packgeXML = generatePackageXML(mapResult)
-        println "Package xml generated : \n $packgeXML"
+        File metadataTypesFile = new File(metadataTypesFilePath);
+    	def inputPackageXMLContent = new groovy.util.XmlSlurper().parseText(inputPackageXMLFile.getText());
+    	def metadataMapContent = new groovy.json.JsonSlurper().parseText(metadataMapFile.text); 
+        def mapResult = extractMetadataTypes(metadataMapContent,inputPackageXMLContent,metadataTypesFile);
+        def packageXML = generatePackageXML(mapResult)
+        println "Package xml generated : \n $packageXML"
     }
 
     def getMetadataTypeByFileSuffix(metadataMap,fileSuffix){
@@ -36,21 +37,16 @@ class ExtractMetadataTypeFromPackageXMLTask extends DefaultTask {
     }
 
     // Extract 
-    def extractMetadataType(metadataMap,packageXMLContent,metadataTypeNames) {
+    def extractMetadataTypes(metadataMapContent,packageXMLContent,metadataTypesFile) {
         def result = [];
 
         def metadataTypeNameList = []
 
-        metadataTypeNames.each{ metadataTypeName -> 
-            def metadataType = getMetadataTypeByName(metadataMap,metadataTypeName)
-            
-            metadataTypeNameList.add(metadataType.name);
+        metadataTypesFile.each{ metadataTypeName -> 
+            metadataTypeName = metadataTypeName.trim();
 
-            if(metadataType.dependences != null){ // meta with dependences
-                metadataType.dependences.each { name ->
-                    metadataTypeNameList.add(name);
-                }
-            }
+            def metadataType = getMetadataTypeByName(metadataMapContent,metadataTypeName)
+            metadataTypeNameList.add(metadataType.name);
         }
 
         // loop through the file packageXMLContent
@@ -63,14 +59,14 @@ class ExtractMetadataTypeFromPackageXMLTask extends DefaultTask {
     }
 
     // Generate
-    def generatePackageXML(xmlMetdataTypes){
+    def generatePackageXML(xmlMetadataTypes){
 
         def sw = new StringWriter()
         def xml = new groovy.xml.MarkupBuilder(sw)
         xml.mkp.xmlDeclaration(version: "1.0", encoding: "UTF-8")
 
         xml.Package(xmlns:"http://soap.sforce.com/2006/04/metadata"){
-            xmlMetdataTypes.each({ type ->
+            xmlMetadataTypes.each({ type ->
                 types(){
                     type.members.each { member ->
                         members(member)
