@@ -13,6 +13,10 @@ A collection of ``Gradle/Groovy`` scripts to work with the salesforce package.xm
 *Generating a package.xml from a list of metadata file list names*
 
 
+#### CopyMetadataTypeFileList : 
+
+*Copying the metada file list names from an existing package to a new package*
+
 ---------------
 
 
