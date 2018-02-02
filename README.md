@@ -17,21 +17,19 @@ A collection of ``Gradle/Groovy`` scripts to work with the salesforce package.xm
 
 *Copying the metada file list names from an existing package to a new package*
 
----------------
-
-
-MetadataTypesDependencies
+#### MetadataTypesDependencies
 
 *Get the dependences metadata type list*
 
-MetadataTypesForRetrieve
+#### ConcatFiles 
 
-*Adding metadata type list in order to generate a package.xml for retrieve*
+*Concat multiples file into one*
+
+---------------
+
 
 MetadataTypeFileListFromPackage 
 
 *Generate a metadata file list names from an existing package*
 
-ConcatFiles 
 
-*Concat multiples file into one*
