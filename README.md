@@ -20,7 +20,7 @@ A collection of ``Gradle/Groovy`` scripts to work with the salesforce package.xm
 ---------------
 
 
-MetadataTypesDependences
+MetadataTypesDependencies
 
 *Get the dependences metadata type list*
 
