@@ -32,4 +32,8 @@ MetadataTypeFileListFromPackage
 
 *Generate a metadata file list names from an existing package*
 
+MetadataTypesFromMetadaTypeFileList
+
+*Generate a metadata types list names from metadata file list names*
+
 
