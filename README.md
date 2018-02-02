@@ -32,6 +32,6 @@ MetadataTypeFileListFromPackage
 
 *Generate a metadata file list names from an existing package*
 
+MergeMetadataTypeFileList 
 
-
-
+*Merge two metadata type file list into one*
