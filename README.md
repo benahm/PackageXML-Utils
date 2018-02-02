@@ -20,16 +20,18 @@ A collection of ``Gradle/Groovy`` scripts to work with the salesforce package.xm
 ---------------
 
 
-MetadataTypeFileListForRetrieve 
+MetadataTypesDependences
 
-*Adding metadata file list names in order to generate a package.xml for retrieve*
+*Get the dependences metadata type list*
+
+MetadataTypesForRetrieve
+
+*Adding metadata type list in order to generate a package.xml for retrieve*
 
 MetadataTypeFileListFromPackage 
 
 *Generate a metadata file list names from an existing package*
 
-MetadataTypesForRetrieve
 
-*Adding metadata type list in order to generate a package.xml for retrieve*
 
 
