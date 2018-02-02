@@ -4,9 +4,9 @@ A collection of ``Gradle/Groovy`` scripts to work with the salesforce package.xm
 
 
 
-#### ExtractMetadataTypesFromPackageXML : 
+#### ExtractMetadaTypeFileListFromPackageXML : 
 
-*Extracting metadata type list from a package.xml*
+*Extracting metadata file list names from a package.xml*
 
 #### PackageXMLFromMetadaTypeFileList : 
 
